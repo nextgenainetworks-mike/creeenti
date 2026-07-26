@@ -230,24 +230,27 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
                       </div>
                     </div>
 
-                    {/* PayPal */}
-                    <div 
-                      onClick={() => setMethod('paypal')}
-                      className={`relative flex items-center justify-between p-4 border rounded-2xl cursor-pointer transition-all duration-300 ${method === 'paypal' ? 'bg-brand-gold/10 border-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.1)]' : 'bg-brand-darker/40 border-brand-border/30 hover:border-brand-border/60'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#003087] flex items-center justify-center font-bold text-white text-xs select-none">
-                          PP
-                        </div>
-                        <div>
-                          <p className="text-sm font-sans font-bold text-brand-light">PayPal</p>
-                          <p className="text-[10px] text-brand-light/40">Tarjeta de crédito o saldo PayPal</p>
-                        </div>
-                      </div>
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${method === 'paypal' ? 'border-brand-gold' : 'border-brand-light/35'}`}>
-                        {method === 'paypal' && <div className="w-2 h-2 bg-brand-gold rounded-full" />}
-                      </div>
-                    </div>
+                     {/* PayPal (Temporarily Disabled) */}
+                     <div 
+                       className="relative flex items-center justify-between p-4 border border-brand-border/20 bg-brand-darker/20 rounded-2xl opacity-40 cursor-not-allowed select-none"
+                       title="Temporalmente inhabilitado"
+                     >
+                       <div className="flex items-center gap-3">
+                         <div className="w-8 h-8 rounded-lg bg-[#003087] flex items-center justify-center font-bold text-white text-xs select-none">
+                           PP
+                         </div>
+                         <div>
+                           <div className="flex items-center gap-2">
+                             <p className="text-sm font-sans font-bold text-brand-light/60">PayPal</p>
+                             <span className="text-[8px] uppercase tracking-wider bg-brand-border/40 text-brand-light/50 px-1.5 py-0.5 rounded font-sans font-semibold">
+                               Temporalmente Inactivo
+                             </span>
+                           </div>
+                           <p className="text-[10px] text-brand-light/30">Tarjeta de crédito o saldo PayPal</p>
+                         </div>
+                       </div>
+                       <div className="w-4 h-4 rounded-full border-2 border-brand-light/10 flex items-center justify-center shrink-0" />
+                     </div>
                   </div>
 
                   {/* ATH Móvil phone input (conditional) */}
