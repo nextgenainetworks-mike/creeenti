@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { X, ShieldCheck, CreditCard, ChevronRight, Phone, CheckCircle2, QrCode, AlertCircle, Loader } from 'lucide-react';
 import { Product } from './ProductCard';
 
+// CONFIGURACIÓN DE TU ATH MÓVIL PERSONAL (Reemplaza con tus datos reales)
+const ATH_MOVIL_PHONE = "787-XXX-XXXX"; // Número para recibir la transferencia
+const WHATSAPP_PHONE = "1787XXXXXXX"; // Número para recibir comprobantes por WhatsApp (Formato: 1 + número sin espacios ni guiones)
+
 interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -297,92 +301,68 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
           </form>
         )}
 
-        {/* STEP 2A: ATH Movil Processing Screen (Simulated) */}
+        {/* STEP 2A: ATH Movil Personal Instructions */}
         {step === 'ath_processing' && (
-          <div className="p-10 text-center flex flex-col items-center justify-center min-h-[400px]">
+          <div className="p-8 md:p-10 text-center flex flex-col items-center justify-center min-h-[400px]">
             
-            {/* Simulated Mobile Notification */}
-            <div className="w-full max-w-sm bg-black/90 border border-brand-gold/40 rounded-2xl p-4 mb-8 shadow-2xl flex items-center gap-3 text-left animate-bounce border-l-4 border-l-brand-gold">
-              <div className="w-10 h-10 rounded-xl bg-[#e21a22] flex items-center justify-center font-bold text-white text-xs select-none shrink-0 shadow-[0_0_10px_rgba(226,26,34,0.3)]">
-                ath
-              </div>
-              <div className="flex-1">
-                <div className="flex justify-between items-baseline">
-                  <span className="text-[10px] uppercase font-bold text-[#e21a22]">ATH Móvil</span>
-                  <span className="text-[9px] text-brand-light/40">Ahora mismo</span>
-                </div>
-                <p className="text-xs font-bold text-brand-light">Cobro pendiente de: Cree en Tí</p>
-                <p className="text-[11px] text-brand-light/60">Autoriza el pago por un total de ${subtotal.toFixed(2)}</p>
-              </div>
+            <div className="w-16 h-16 bg-[#e21a22]/10 border border-[#e21a22]/30 rounded-full flex items-center justify-center mb-6">
+              <Phone className="text-[#e21a22]" size={28} />
             </div>
 
-            <div className="w-16 h-16 bg-brand-gold/10 border border-brand-gold/30 rounded-full flex items-center justify-center mb-6">
-              <Loader className="text-brand-gold animate-spin" size={28} />
-            </div>
-
-            <h3 className="font-display text-2xl text-brand-light mb-2">Esperando Aprobación</h3>
-            <p className="text-sm font-sans font-light text-brand-light/60 max-w-md mb-8 leading-relaxed">
-              Hemos enviado una notificación push de pago a tu aplicación de **ATH Móvil** asociada al teléfono <strong className="text-brand-gold">{phone}</strong>. Abre la app para confirmarlo.
+            <h3 className="font-display text-2xl text-brand-light mb-2">Instrucciones de Pago</h3>
+            <p className="text-sm font-sans font-light text-brand-light/60 max-w-md mb-6 leading-relaxed">
+              Para completar tu compra de estas piezas únicas, realiza la transferencia mediante **ATH Móvil Personal**:
             </p>
 
-            {/* QR Code Alternative option */}
-            <div className="border border-brand-border/40 bg-brand-darker/30 rounded-2xl p-6 w-full max-w-md flex flex-col items-center gap-4">
-              <div className="flex items-center gap-2 text-xs text-brand-sand">
-                <QrCode size={16} className="text-brand-gold" />
-                <span>¿No te llegó el push? Escanea este QR para pagar:</span>
+            <div className="bg-brand-darker/60 border border-brand-border/40 rounded-2xl p-6 w-full max-w-md space-y-4 text-left">
+              <div className="flex justify-between items-center border-b border-brand-border/20 pb-3">
+                <span className="text-xs text-brand-light/50 uppercase">Enviar pago a:</span>
+                <span className="text-base font-bold text-brand-gold">{ATH_MOVIL_PHONE}</span>
               </div>
-              
-              {/* Simulated QR Code box */}
-              <div className="w-36 h-36 bg-white p-3 rounded-xl flex items-center justify-center shadow-lg border border-brand-border/20">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-brand-dark">
-                  {/* Outer border markers */}
-                  <rect x="0" y="0" width="25" height="25" fill="currentColor" />
-                  <rect x="2" y="2" width="21" height="21" fill="white" />
-                  <rect x="6" y="6" width="13" height="13" fill="currentColor" />
-                  
-                  <rect x="75" y="0" width="25" height="25" fill="currentColor" />
-                  <rect x="77" y="2" width="21" height="21" fill="white" />
-                  <rect x="81" y="6" width="13" height="13" fill="currentColor" />
-
-                  <rect x="0" y="75" width="25" height="25" fill="currentColor" />
-                  <rect x="2" y="77" width="21" height="21" fill="white" />
-                  <rect x="6" y="81" width="13" height="13" fill="currentColor" />
-
-                  {/* Random pixels to simulate QR */}
-                  <rect x="35" y="5" width="10" height="5" fill="currentColor" />
-                  <rect x="45" y="15" width="5" height="10" fill="currentColor" />
-                  <rect x="55" y="5" width="15" height="5" fill="currentColor" />
-                  <rect x="65" y="15" width="5" height="15" fill="currentColor" />
-                  
-                  <rect x="30" y="30" width="20" height="10" fill="currentColor" />
-                  <rect x="60" y="35" width="10" height="10" fill="currentColor" />
-                  <rect x="35" y="50" width="15" height="5" fill="currentColor" />
-                  <rect x="55" y="50" width="25" height="10" fill="currentColor" />
-
-                  <rect x="30" y="65" width="10" height="20" fill="currentColor" />
-                  <rect x="45" y="75" width="20" height="5" fill="currentColor" />
-                  <rect x="70" y="75" width="10" height="15" fill="currentColor" />
-                  <rect x="85" y="60" width="10" height="10" fill="currentColor" />
-
-                  {/* Logo overlay */}
-                  <rect x="40" y="40" width="20" height="20" fill="white" />
-                  <rect x="43" y="43" width="14" height="14" fill="#e21a22" />
-                </svg>
+              <div className="flex justify-between items-center border-b border-brand-border/20 pb-3">
+                <span className="text-xs text-brand-light/50 uppercase">Total a transferir:</span>
+                <span className="text-lg font-serif font-bold text-brand-gold">${subtotal.toFixed(2)}</span>
               </div>
+              <div className="text-xs text-brand-light/60 space-y-2 pt-1 font-light">
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-brand-gold/15 text-brand-gold flex items-center justify-center text-[9px] font-bold shrink-0 mt-0.5">1</span>
+                  <span>Abre tu aplicación de <strong>ATH Móvil</strong> y realiza la transferencia al número indicado arriba.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-brand-gold/15 text-brand-gold flex items-center justify-center text-[9px] font-bold shrink-0 mt-0.5">2</span>
+                  <span>Toma una captura de pantalla del recibo de confirmación.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-brand-gold/15 text-brand-gold flex items-center justify-center text-[9px] font-bold shrink-0 mt-0.5">3</span>
+                  <span>Envía la captura de pantalla por WhatsApp usando el botón verde de abajo para que podamos validar y procesar tu orden.</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-3 w-full max-w-md">
+              <a 
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=Hola!%20Acabo%20de%20hacer%20el%20pago%20de%20mi%20pedido%20de%20Cree%20en%20T%C3%AD%20por%20un%20total%20de%20$${subtotal.toFixed(2)}.%20Mi%20nombre%20es%20${encodeURIComponent(name)}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-6 bg-[#25D366] hover:bg-[#20ba5a] text-white font-sans font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(37,211,102,0.2)]"
+              >
+                Enviar Comprobante por WhatsApp
+              </a>
               
               <button 
                 onClick={approveATHPayment}
-                className="py-3 px-8 bg-brand-gold hover:bg-brand-goldlight text-brand-dark font-sans font-bold uppercase tracking-widest text-xs rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+                className="w-full py-3.5 px-6 bg-brand-gold hover:bg-brand-goldlight text-brand-dark font-sans font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(212,175,55,0.2)]"
               >
-                Aprobar Simulación de Pago
+                Confirmar Orden en Tienda
               </button>
             </div>
 
-            <div className="mt-8 text-[10px] text-brand-light/30 flex items-center gap-1.5">
-              <ShieldCheck size={12} className="text-brand-gold/40" />
-              <span>Transacción certificada por ATH Móvil Business.</span>
-            </div>
-
+            <button 
+              onClick={() => setStep('form')}
+              className="mt-6 text-[11px] text-brand-light/30 hover:text-brand-gold uppercase tracking-wider transition-colors duration-200"
+            >
+              Volver al Formulario
+            </button>
           </div>
         )}
 
