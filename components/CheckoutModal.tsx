@@ -3,8 +3,8 @@ import { X, ShieldCheck, CreditCard, ChevronRight, Phone, CheckCircle2, QrCode, 
 import { Product } from './ProductCard';
 
 // CONFIGURACIÓN DE TU ATH MÓVIL PERSONAL (Reemplaza con tus datos reales)
-const ATH_MOVIL_PHONE = "787-XXX-XXXX"; // Número para recibir la transferencia
-const WHATSAPP_PHONE = "1787XXXXXXX"; // Número para recibir comprobantes por WhatsApp (Formato: 1 + número sin espacios ni guiones)
+const ATH_MOVIL_PHONE = "(939) 881-3330"; // Número para recibir la transferencia
+const WHATSAPP_PHONE = "19398813330"; // Número para recibir comprobantes por WhatsApp (Formato: 1 + número sin espacios ni guiones)
 
 interface CheckoutModalProps {
   isOpen: boolean;
