@@ -490,7 +490,7 @@ export default function App() {
 
       {/* FEATURES / TRUST SECTION */}
       <section className="relative z-10 bg-brand-darker/50 border-t border-b border-brand-border/30 py-16 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 text-center">
           <div className="space-y-3">
             <div className="w-12 h-12 mx-auto rounded-full bg-brand-gold/5 flex items-center justify-center text-brand-gold">
               <Sparkles size={20} />
@@ -507,15 +507,6 @@ export default function App() {
             <h4 className="font-display text-base uppercase tracking-widest text-brand-light">Compra Confiable</h4>
             <p className="text-xs font-sans font-light text-brand-sand/70 max-w-xs mx-auto leading-relaxed">
               Procesa tu pedido de forma segura mediante la conveniencia de **ATH Móvil** o con el respaldo mundial de **PayPal**.
-            </p>
-          </div>
-          <div className="space-y-3">
-            <div className="w-12 h-12 mx-auto rounded-full bg-brand-gold/5 flex items-center justify-center text-brand-gold">
-              <CheckCircle size={20} />
-            </div>
-            <h4 className="font-display text-base uppercase tracking-widest text-brand-light">Certificado Uno de 1</h4>
-            <p className="text-xs font-sans font-light text-brand-sand/70 max-w-xs mx-auto leading-relaxed">
-              Cada collar es único en el mundo. Recibirás un certificado de autenticidad impreso que constata que posees la única pieza existente.
             </p>
           </div>
         </div>
