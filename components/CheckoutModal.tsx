@@ -63,14 +63,29 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
     }
   };
 
+  // Format WhatsApp message with full order and shipping details
+  const getWhatsAppMessage = () => {
+    const paymentText = method === 'athmovil' 
+      ? 'Acabo de hacer la transferencia por ATH Móvil.' 
+      : 'Acabo de hacer el pago por PayPal.';
+      
+    const itemsList = cartItems.map(item => `• ${item.name} ($${item.price.toFixed(2)})`).join('\n');
+    const shippingInfo = `Cliente: ${name}\nEmail: ${email}\nTeléfono: ${phone || 'N/A'}\nDirección: ${address}, ${city}, PR ${zip}`;
+    
+    const textMessage = `Hola! ${paymentText}\n\n*Detalles de la Orden:*\n${itemsList}\n\n*Total:* $${subtotal.toFixed(2)}\n\n*Dirección de Envío:*\n${shippingInfo}`;
+    return encodeURIComponent(textMessage);
+  };
+
+  // Complete checkout process manually
+  const handleFinishCheckout = () => {
+    onPurchaseSuccess(cartItems.map(item => item.id));
+    onClose();
+    resetForm();
+  };
+
   // Simulate ATH Móvil approval
   const approveATHPayment = () => {
     setStep('ath_success');
-    setTimeout(() => {
-      onPurchaseSuccess(cartItems.map(item => item.id));
-      onClose();
-      resetForm();
-    }, 4000);
   };
 
   // Simulate PayPal payment processing
@@ -78,11 +93,6 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
     setPaypalStep('processing');
     setTimeout(() => {
       setStep('paypal_success');
-      setTimeout(() => {
-        onPurchaseSuccess(cartItems.map(item => item.id));
-        onClose();
-        resetForm();
-      }, 4000);
     }, 2000);
   };
 
@@ -344,7 +354,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
 
             <div className="mt-8 flex flex-col gap-3 w-full max-w-md">
               <a 
-                href={`https://wa.me/${WHATSAPP_PHONE}?text=Hola!%20Acabo%20de%20hacer%20el%20pago%20de%20mi%20pedido%20de%20Cree%20en%20T%C3%AD%20por%20un%20total%20de%20$${subtotal.toFixed(2)}.%20Mi%20nombre%20es%20${encodeURIComponent(name)}.`}
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=${getWhatsAppMessage()}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full py-3.5 px-6 bg-[#25D366] hover:bg-[#20ba5a] text-white font-sans font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(37,211,102,0.2)]"
@@ -376,21 +386,23 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
               <CheckCircle2 className="text-brand-gold w-10 h-10" />
             </div>
 
-            <h3 className="font-display text-3xl text-brand-light mb-3">¡Pago Autorizado!</h3>
+            <h3 className="font-display text-3xl text-brand-light mb-3">¡Orden Registrada!</h3>
             <p className="text-sm font-sans font-light text-brand-light/75 max-w-md leading-relaxed mb-6">
-              El pago de <strong className="text-brand-gold">${subtotal.toFixed(2)}</strong> fue procesado con éxito a través de ATH Móvil. 
+              Tu orden ha sido registrada en el sistema. Por favor, asegúrate de enviar el comprobante de pago por WhatsApp si no lo has hecho aún.
             </p>
             
-            <div className="bg-brand-darker/60 border border-brand-border/40 rounded-2xl p-5 max-w-sm w-full text-xs text-left space-y-2">
+            <div className="bg-brand-darker/60 border border-brand-border/40 rounded-2xl p-5 max-w-sm w-full text-xs text-left space-y-2 mb-6">
               <div className="flex justify-between"><span className="text-brand-light/50">Comercio:</span> <span className="font-semibold text-brand-light">Cree en Tí Jewelry</span></div>
               <div className="flex justify-between"><span className="text-brand-light/50">Cliente:</span> <span className="text-brand-light">{name}</span></div>
-              <div className="flex justify-between"><span className="text-brand-light/50">Teléfono:</span> <span className="text-brand-light">{phone}</span></div>
-              <div className="flex justify-between"><span className="text-brand-light/50">Nº Confirmación:</span> <span className="font-mono text-brand-gold">ATH-9848012</span></div>
+              <div className="flex justify-between"><span className="text-brand-light/50">Monto:</span> <span className="font-semibold text-brand-gold">${subtotal.toFixed(2)}</span></div>
             </div>
 
-            <p className="text-[11px] text-brand-sand italic mt-8 animate-pulse">
-              Preparando tu orden exclusiva... Redirigiendo a la boutique.
-            </p>
+            <button 
+              onClick={handleFinishCheckout}
+              className="py-3.5 px-8 bg-brand-gold hover:bg-brand-goldlight text-brand-dark font-sans font-bold uppercase tracking-widest text-xs rounded-xl transition-all duration-300 shadow-[0_4px_12px_rgba(212,175,55,0.2)]"
+            >
+              Finalizar y Volver a la Tienda
+            </button>
           </div>
         )}
 
@@ -517,18 +529,31 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onPurchaseSu
 
             <h3 className="font-display text-3xl text-emerald-400 mb-3">¡Compra Confirmada!</h3>
             <p className="text-sm font-sans font-light text-brand-light/75 max-w-md leading-relaxed mb-6">
-              Tu pago fue aprobado con éxito. Hemos enviado un recibo a tu correo <strong className="text-brand-gold">{email}</strong>.
+              Tu pago simulado de PayPal fue procesado con éxito. Para completar tu orden y coordinar el envío de tus piezas exclusivas, haz clic en el botón de abajo para enviarnos los detalles de envío por WhatsApp.
             </p>
             
-            <div className="bg-brand-darker/60 border border-brand-border/40 rounded-2xl p-5 max-w-sm w-full text-xs text-left space-y-2">
-              <div className="flex justify-between"><span className="text-brand-light/50">Referencia PayPal:</span> <span className="font-mono text-brand-light">PP-SOL-89104</span></div>
-              <div className="flex justify-between"><span className="text-brand-light/50">Monto Cobrado:</span> <span className="font-semibold text-brand-light">${subtotal.toFixed(2)}</span></div>
+            <div className="bg-brand-darker/60 border border-brand-border/40 rounded-2xl p-5 max-w-sm w-full text-xs text-left space-y-2 mb-6">
+              <div className="flex justify-between"><span className="text-brand-light/50">Monto:</span> <span className="font-semibold text-brand-light">${subtotal.toFixed(2)}</span></div>
               <div className="flex justify-between"><span className="text-brand-light/50">Envío:</span> <span className="text-emerald-400">Gratuito Asegurado</span></div>
             </div>
 
-            <p className="text-[11px] text-brand-sand italic mt-8 animate-pulse">
-              Guardando el estado del inventario exclusivo...
-            </p>
+            <div className="flex flex-col gap-3 w-full max-w-md">
+              <a 
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=${getWhatsAppMessage()}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-6 bg-[#25D366] hover:bg-[#20ba5a] text-white font-sans font-bold uppercase tracking-wider text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(37,211,102,0.2)]"
+              >
+                Enviar Detalles por WhatsApp
+              </a>
+
+              <button 
+                onClick={handleFinishCheckout}
+                className="w-full py-3.5 px-6 bg-brand-gold hover:bg-brand-goldlight text-brand-dark font-sans font-bold uppercase tracking-widest text-xs rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_4px_12px_rgba(212,175,55,0.2)]"
+              >
+                Finalizar y Volver a la Tienda
+              </button>
+            </div>
           </div>
         )}
 
