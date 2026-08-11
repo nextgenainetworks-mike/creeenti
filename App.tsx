@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Sparkles, Shield, RefreshCw, CheckCircle, Heart, Star } from 'lucide-react';
+import { ShoppingBag, Sparkles, Shield, CheckCircle, Heart, Star } from 'lucide-react';
 import ProductCard, { Product } from './components/ProductCard';
 import ProductDetailModal from './components/ProductDetailModal';
 import Cart from './components/Cart';
@@ -367,17 +367,7 @@ export default function App() {
               <span className="text-[9px] uppercase tracking-[0.25em] text-brand-sand font-semibold mt-1">Uno de 1</span>
             </div>
           </div>
-
           <nav className="flex items-center gap-6">
-            <button 
-              onClick={handleResetBoutique}
-              className="text-xs uppercase tracking-widest text-brand-light/40 hover:text-brand-gold flex items-center gap-1.5 transition-colors duration-300 font-sans"
-              title="Restaurar inventario de prueba"
-            >
-              <RefreshCw size={12} />
-              <span className="hidden sm:inline">Reiniciar Tienda</span>
-            </button>
-            
             <button 
               onClick={() => setIsCartOpen(true)}
               className="relative p-2.5 bg-brand-light/5 hover:bg-brand-gold/15 border border-brand-border/40 hover:border-brand-gold/50 rounded-full transition-all duration-300 group"
