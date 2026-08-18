@@ -28,6 +28,7 @@ export default function ProductCard({ product, onViewDetails, onAddToCart }: Pro
         <img 
           src={product.image} 
           alt={product.name} 
+          loading="lazy"
           className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${product.sold ? 'opacity-60 grayscale-[30%]' : ''}`}
         />
         
